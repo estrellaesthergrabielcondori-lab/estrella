@@ -2,71 +2,195 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Tic Tac Toe Online</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego de Mesa</title>
+  <script type="module" src="./index.js" defer></script>
   <style>
-    body { font-family: Arial, sans-serif; background:#111; color:white; text-align:center; }
-    .pantalla { display:none; }
-    .pantalla.activa { display:block; }
-    #tablero { display:grid; grid-template-columns: repeat(3,120px); grid-gap:5px; justify-content:center; margin-top:20px; }
-    .celda { display:flex; align-items:center; justify-content:center; font-size:48px; background:#222; cursor:pointer; }
-    .ganadora { background:limegreen; }
-    .amigo-box { margin:10px; padding:10px; border:1px solid #ccc; border-radius:5px; }
+    /* 🎮 Fondo gamer animado */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ff0000, #ff8c00, #ffff00, #00ffea, #0044ff, #8000ff);
+      background-size: 400% 400%;
+      animation: fondoAnimado 8s ease infinite;
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    @keyframes fondoAnimado {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* 🎮 Título gamer animado */
+    header {
+      font-family: 'Impact', 'Arial Black', sans-serif;
+      font-size: 2.5rem;
+      padding: 15px;
+      background: linear-gradient(90deg, #ff0000, #ff8c00, #ffff00);
+      color: #fff;
+      text-shadow: 3px 3px 15px rgba(0,0,0,0.8);
+      letter-spacing: 3px;
+      border-bottom: 3px solid #000;
+      animation: tituloAnimado 3s infinite alternate;
+    }
+
+    @keyframes tituloAnimado {
+      0% { transform: scale(1); color: #fff; }
+      50% { transform: scale(1.1); color: #ff4500; }
+      100% { transform: scale(1); color: #fff; }
+    }
+
+    /* Contenedor principal */
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    }
+
+    /* Inputs gamer */
+    input {
+      padding: 12px;
+      margin: 8px;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      font-size: 1.1rem;
+      background: linear-gradient(145deg, #222, #111);
+      color: #fff;
+      outline: none;
+      transition: 0.3s;
+      box-shadow: inset 2px 2px 5px rgba(0,0,0,0.8), inset -2px -2px 5px rgba(255,255,255,0.1);
+    }
+
+    input:focus {
+      border: 2px solid #00f2ff;
+      box-shadow: 0 0 15px #00f2ff;
+    }
+
+    /* Botones gamer */
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #ff4500, #ff0000);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #ff6347, #ff4500);
+      transform: scale(1.05);
+    }
+
+    /* Panel de Partida */
+    #panelPartida {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.5);
+    }
+
+    /* 🎮 Tablero estilo gamer */
+    #tablero {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 8px;
+      margin: 20px auto;
+      justify-content: center;
+    }
+
+    .celda {
+      width: 100px;
+      height: 100px;
+      background: rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 3rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: transform 0.3s ease, background 0.3s ease;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+
+    .celda:hover {
+      transform: scale(1.1);
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* ❌ X en 3D */
+    .celda.x {
+      color: #ff3333;
+      text-shadow:
+        1px 1px 2px #000,
+        2px 2px 5px #ff6666,
+        3px 3px 10px #ff0000,
+        0 0 15px #ff0000;
+    }
+
+    /* ⭕ O en 3D */
+    .celda.o {
+      color: #33ccff;
+      text-shadow:
+        1px 1px 2px #000,
+        2px 2px 5px #66ffff,
+        3px 3px 10px #00ccff,
+        0 0 15px #00ccff;
+    }
+
+    /* Botones de reinicio */
+    #btnReiniciar, #btnAceptarReinicio {
+      display: none;
+      background: linear-gradient(90deg, #28a745, #218838);
+    }
+    #btnReiniciar:hover, #btnAceptarReinicio:hover {
+      background: linear-gradient(90deg, #34d058, #28a745);
+    }
   </style>
 </head>
 <body>
-
-  <!-- LOGIN -->
-  <div id="pantallaLogin" class="pantalla activa">
-    <h2>Iniciar Sesión</h2>
-    <input id="emailLogin" type="email" placeholder="Correo"><br><br>
-    <input id="passwordLogin" type="password" placeholder="Contraseña"><br><br>
-    <input id="nombreRegistro" type="text" placeholder="Nombre (solo registro)"><br><br>
-    <button id="btnLogin">Login</button>
+  <header>🎮 Juego de Mesa Multiplayer</header>
+  <div class="container">
+    <h3>Autenticación</h3>
+    <input type="email" id="email" placeholder="Correo">
+    <input type="password" id="password" placeholder="Contraseña">
     <button id="btnRegister">Registrarse</button>
-  </div>
+    <button id="btnLogin">Iniciar Sesión</button>
+    <button id="btnLogout" disabled>Cerrar Sesión</button>
+    <p>Estado: <span id="estadoAuth">desconectado</span></p>
+    <p id="mensaje"></p>
 
-  <!-- PARTIDAS -->
-  <div id="pantallaPartidas" class="pantalla">
-    <h2>Partidas</h2>
-    <button id="btnCrearPartida">Crear partida</button><br><br>
-    <input id="codigoPartida" type="text" placeholder="Código partida">
-    <button id="btnUnirsePartida">Unirse</button><br><br>
-    <input id="codigoPartidaCreada" type="text" readonly><br><br>
-    <button id="btnAmigos">Amigos</button>
-    <button id="btnLogout">Cerrar sesión</button>
-  </div>
+    <h3>Partidas</h3>
+    <button id="btnCrearPartida" disabled>Crear Partida</button>
+    <input type="text" id="codigoPartida" placeholder="ID Partida">
+    <button id="btnUnirsePartida" disabled>Unirse</button>
+    <button id="btnVerPartida">Ver Partida</button>
 
-  <!-- JUEGO -->
-  <div id="pantallaJuego" class="pantalla">
-    <h2>Juego</h2>
-    <p><b>Jugador X:</b> <span id="jugadorXNombre"></span></p>
-    <p><b>Jugador O:</b> <span id="jugadorONombre"></span></p>
-    <div id="tablero"></div>
-    <div id="mensajeGanadorDiv" style="margin-top:15px; font-size:20px; color:yellow;"></div>
-
-    <!-- Chat -->
-    <h3>Chat</h3>
-    <div id="chatMensajes" style="height:150px; overflow-y:auto; border:1px solid #ccc; margin:10px; padding:5px;"></div>
-    <input id="mensajeInput" type="text" placeholder="Escribe un mensaje">
-    <button id="btnEnviarMensaje">Enviar</button>
-
-    <!-- Invitaciones -->
-    <div id="amigosParaInvitar"></div>
-  </div>
-
-  <!-- AMIGOS -->
-  <div id="pantallaAmigos" class="pantalla">
-    <h2>Amigos</h2>
-    <div>
-      <button id="btnSeccionAñadir">Añadir</button>
-      <button id="btnSeccionSolicitudes">Solicitudes</button>
-      <button id="btnSeccionMisAmigos">Mis amigos</button>
+    <div id="panelPartida">
+      <h3>Partida</h3>
+      <p>ID: <span id="pid"></span></p>
+      <p>Estado: <span id="pestado"></span></p>
+      <p>Turno: <span id="pturno"></span></p>
+      <p>Jugador X: <span id="px"></span></p>
+      <p>Jugador O: <span id="po"></span></p>
+      <p>Ganador: <span id="pganador"></span></p>
+      <div id="tablero"></div>
+      <button id="btnReiniciar">🔄 Jugar de Nuevo</button>
+      <button id="btnAceptarReinicio">✅ Aceptar Nueva Partida</button>
     </div>
-    <div id="contenidoAmigos" style="margin-top:15px;"></div>
-    <div id="amigosEnLinea" style="margin-top:15px;"></div>
-    <button id="btnVolverPartidas3">Volver</button>
   </div>
-
-  <script type="module" src="main.js"></script>
 </body>
 </html>

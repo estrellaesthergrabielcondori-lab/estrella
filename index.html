@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🔥 3 en Raya Online 🔥</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* ===== Fondo con GIF ===== */
     body {
       margin: 0;
       padding: 0;
@@ -20,7 +19,6 @@
       background-size: cover;
     }
 
-    /* ===== Panel central ===== */
     .panel {
       background: rgba(0,0,0,0.5);
       border-radius: 20px;
@@ -39,7 +37,6 @@
       text-align: center;
     }
 
-    /* ===== Botones ===== */
     button {
       background: linear-gradient(45deg, #ff8a00, #e52e71, #9b00ff);
       border: none;
@@ -56,7 +53,6 @@
       box-shadow: 0 0 10px white;
     }
 
-    /* ===== Inputs ===== */
     input {
       padding: 10px;
       border-radius: 10px;
@@ -65,7 +61,6 @@
       width: 200px;
     }
 
-    /* ===== Pantallas ===== */
     .pantalla {
       display: none;
       width: 100%;
@@ -75,9 +70,7 @@
     .pantalla.activa {
       display: block;
     }
-    
 
-    /* ===== Tablero ===== */
     #tablero {
       display: grid;
       grid-template-columns: repeat(3, 120px);
@@ -113,7 +106,6 @@
       box-shadow: 0 0 15px gold;
     }
 
-    /* ===== Chat ===== */
     #chatMensajes {
       background: rgba(255,255,255,0.1);
       border-radius: 10px;
@@ -124,7 +116,6 @@
       color: #fff;
     }
 
-    /* ===== Amigos ===== */
     .amigo-box {
       background: rgba(255,255,255,0.1);
       color: white;
@@ -136,7 +127,6 @@
       align-items: center;
     }
 
-    /* ===== Inputs y panel amigos ===== */
     #contenidoAmigos, #amigosParaInvitar, #amigosEnLinea {
       display: flex;
       flex-direction: column;
@@ -177,9 +167,14 @@
       <div>
         <span id="jugadorXNombre"></span> vs <span id="jugadorONombre"></span>
       </div>
+
       <div id="tablero"></div>
-      
+
+      <!-- 🔧 ESTE ES EL CAMPO QUE FALTABA -->
+      <input type="text" id="codigoPartidaCreada" readonly style="margin-top: 10px; width: 100%; text-align: center;" placeholder="Código de la partida creada">
+
       <div id="mensajeGanador"></div>
+
       <div id="chatMensajes"></div>
       <input type="text" id="mensajeInput" placeholder="Escribe un mensaje">
       <button id="btnEnviarMensaje">Enviar</button>
@@ -199,7 +194,10 @@
     </div>
 
   </div>
+
+  <!-- 🔗 JS Firebase + Main -->
   <script type="module" src="js/firebaseApp.js"></script>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
+

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🔥 3 en Raya Online 🔥</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
@@ -57,7 +57,7 @@
       padding: 10px;
       border-radius: 10px;
       border: 2px solid rgba(255,255,255,0.5);
-      margin-right: 10px;
+      margin: 5px 0;
       width: 200px;
     }
 
@@ -114,6 +114,7 @@
       max-height: 200px;
       overflow-y: auto;
       color: #fff;
+      margin-top: 10px;
     }
 
     .amigo-box {
@@ -154,6 +155,8 @@
     <div id="pantallaPartidas" class="pantalla">
       <h2>Partidas</h2>
       <button id="btnCrearPartida">Crear Partida</button>
+      <!-- NUEVO input para el código creado -->
+      <input type="text" id="codigoPartidaCreada" readonly placeholder="Código creado">
       <input type="text" id="codigoPartida" placeholder="Código de partida">
       <button id="btnUnirsePartida">Unirse a Partida</button>
       <button id="btnAmigos">Amigos</button>
@@ -167,14 +170,8 @@
       <div>
         <span id="jugadorXNombre"></span> vs <span id="jugadorONombre"></span>
       </div>
-
       <div id="tablero"></div>
-
-      <!-- 🔧 ESTE ES EL CAMPO QUE FALTABA -->
-      <input type="text" id="codigoPartidaCreada" readonly style="margin-top: 10px; width: 100%; text-align: center;" placeholder="Código de la partida creada">
-
       <div id="mensajeGanador"></div>
-
       <div id="chatMensajes"></div>
       <input type="text" id="mensajeInput" placeholder="Escribe un mensaje">
       <button id="btnEnviarMensaje">Enviar</button>
@@ -194,10 +191,8 @@
     </div>
 
   </div>
-
-  <!-- 🔗 JS Firebase + Main -->
-  <script type="module" src="js/firebaseApp.js"></script>
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="/public/js/firebaseApp.js"></script>
+  <script type="module" src="/public/js/main.js"></script>
 </body>
 </html>
 

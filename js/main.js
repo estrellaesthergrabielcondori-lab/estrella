@@ -487,6 +487,3 @@ async function escucharInvitaciones() {
   });
 }
 
-
-
-
